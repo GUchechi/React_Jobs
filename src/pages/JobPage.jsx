@@ -1,3 +1,4 @@
+import PropTypes from "prop-types";
 import { useParams, useLoaderData, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { FaArrowLeft, FaMapMarker } from "react-icons/fa";
@@ -109,6 +110,10 @@ const JobPage = ({ deleteJob }) => {
       </section>
     </>
   );
+};
+
+JobPage.propTypes = {
+  deleteJob: PropTypes.func.isRequired,
 };
 
 export default JobPage;
