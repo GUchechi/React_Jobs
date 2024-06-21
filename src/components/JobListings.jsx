@@ -1,37 +1,31 @@
-import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import JobListing from "./JobListing";
 import Spinner from "./Spinner";
-import { fetchJobs } from "../app/JobSlice";
 
 const JobListings = ({ isHome = false }) => {
-  const dispatch = useDispatch();
-  const jobs = useSelector((state) => state.jobs.jobs);
-  const jobStatus = useSelector((state) => state.jobs.status);
-  const error = useSelector((state) => state.jobs.error);
+  const [jobs, setJobs] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (jobStatus === "idle") {
-      dispatch(fetchJobs(isHome));
-    }
-  }, [dispatch, jobStatus, isHome]);
+    const fetchJobs = async () => {
+      const apiUrl = isHome ? "/api/jobs?_limit=3" : "/api/jobs";
+      try {
+        const res = await fetch(apiUrl);
+        if (!res.ok) {
+          throw new Error("Failed to fetch jobs");
+        }
+        const data = await res.json();
+        setJobs(data);
+      } catch (error) {
+        console.log("Error fetching data", error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  let content;
-
-  if (jobStatus === "loading") {
-    content = <Spinner />;
-  } else if (jobStatus === "succeeded") {
-    content = (
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {jobs.map((job) => (
-          <JobListing key={job.id} job={job} />
-        ))}
-      </div>
-    );
-  } else if (jobStatus === "failed") {
-    content = <p>{error}</p>;
-  }
+    fetchJobs();
+  }, [isHome]);
 
   return (
     <section className="bg-blue-50 px-4 py-10">
@@ -39,7 +33,16 @@ const JobListings = ({ isHome = false }) => {
         <h2 className="text-3xl font-bold text-indigo-500 mb-6 text-center">
           {isHome ? "Recent Jobs" : "Browse Jobs"}
         </h2>
-        {content}
+
+        {loading ? (
+          <Spinner />
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {jobs.map((job) => (
+              <JobListing key={job.id} job={job} />
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );

@@ -6,16 +6,6 @@ const initialState = {
   error: null,
 };
 
-// Thunks
-export const fetchJobs = createAsyncThunk("jobs/fetchJobs", async (isHome) => {
-  const apiUrl = isHome ? "/api/jobs?_limit=3" : "/api/jobs";
-  const response = await fetch(apiUrl);
-  if (!response.ok) {
-    throw new Error("Failed to fetch jobs");
-  }
-  const data = await response.json();
-  return data;
-});
 
 // Add Jobs
 export const addJob = createAsyncThunk("jobs/addJob", async (newJob) => {
@@ -58,17 +48,6 @@ const jobsSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchJobs.pending, (state) => {
-        state.status = "loading";
-      })
-      .addCase(fetchJobs.fulfilled, (state, action) => {
-        state.status = "succeeded";
-        state.jobs = action.payload;
-      })
-      .addCase(fetchJobs.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.error.message;
-      })
       .addCase(addJob.fulfilled, (state, action) => {
         state.jobs.push(action.payload);
       })
