@@ -14,40 +14,6 @@ import jobLoader from "./components/JobLoader";
 import EditJobPage from "./pages/EditJobPage";
 
 const App = () => {
-  
-
-  // Delete Job
-  const deleteJob = async (id) => {
-    try {
-      const res = await fetch(`/api/jobs/${id}`, {
-        method: "DELETE",
-      });
-      if (!res.ok) {
-        throw new Error("Failed to delete job");
-      }
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  };
-
-  // Update Job
-  const updateJob = async (job) => {
-    try {
-      const res = await fetch(`/api/jobs/${job.id}`, {
-        method: "PUT",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(job),
-      });
-      if (!res.ok) {
-        throw new Error("Failed to update job");
-      }
-    } catch (error) {
-      console.error("Error:", error);
-    }
-  };
-
   const router = createBrowserRouter(
     createRoutesFromElements(
       <Route path="/" element={<MainLayout />}>
