@@ -83,6 +83,20 @@
         "contactEmail": "contact@ipsumlorem.com",
         "contactPhone": "555-555-5555"
       }
+    },
+    {
+      "id": "c3a8",
+      "title": "Godswill Holding",
+      "type": "Full-Time",
+      "location": "Abuja",
+      "description": "TEsting Redux",
+      "salary": "$175K - 200K",
+      "company": {
+        "name": "Freelancing",
+        "description": "Testing",
+        "contactEmail": "godswill@gmail.com",
+        "contactPhone": "08142827949"
+      }
     }
   ]
 }

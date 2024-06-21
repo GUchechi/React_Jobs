@@ -1,10 +1,11 @@
-import PropTypes from "prop-types";
+import { useDispatch } from "react-redux";
 import { useParams, useLoaderData, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { FaArrowLeft, FaMapMarker } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
-const JobPage = ({ deleteJob }) => {
+const JobPage = () => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const { id } = useParams();
   const job = useLoaderData();
@@ -110,10 +111,6 @@ const JobPage = ({ deleteJob }) => {
       </section>
     </>
   );
-};
-
-JobPage.propTypes = {
-  deleteJob: PropTypes.func.isRequired,
 };
 
 export default JobPage;

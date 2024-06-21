@@ -1,9 +1,13 @@
-import PropTypes from "prop-types";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { addJob } from "../app/JobSlice";
 
-const AddJobPage = ({ addJobSubmit }) => {
+const AddJobPage = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const [title, setTitle] = useState("");
   const [type, setType] = useState("Full-Time");
   const [location, setLocation] = useState("");
@@ -13,8 +17,6 @@ const AddJobPage = ({ addJobSubmit }) => {
   const [companyDescription, setCompanyDescription] = useState("");
   const [contactEmail, setContactEmail] = useState("");
   const [contactPhone, setContactPhone] = useState("");
-
-  const navigate = useNavigate();
 
   const submitForm = (e) => {
     e.preventDefault();
@@ -33,7 +35,7 @@ const AddJobPage = ({ addJobSubmit }) => {
       },
     };
 
-    addJobSubmit(newJob);
+    dispatch(addJob(newJob));
 
     toast.success("Job Added Successfully");
 
@@ -234,10 +236,6 @@ const AddJobPage = ({ addJobSubmit }) => {
       </div>
     </section>
   );
-};
-
-AddJobPage.propTypes = {
-  addJobSubmit: PropTypes.func.isRequired,
 };
 
 export default AddJobPage;

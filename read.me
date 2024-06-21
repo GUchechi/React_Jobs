@@ -1,0 +1,18 @@
+Other func
+// Add New Job
+  const addJob = async (newJob) => {
+    try {
+      const res = await fetch("/api/jobs", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newJob),
+      });
+      if (!res.ok) {
+        throw new Error("Failed to add job");
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
