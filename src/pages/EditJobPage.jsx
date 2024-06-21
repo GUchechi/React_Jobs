@@ -1,9 +1,13 @@
-import PropTypes from "prop-types";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useParams, useLoaderData, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { updateJob } from "../app/JobSlice";
 
-const EditJobPage = ({ updateJobSubmit }) => {
+const EditJobPage = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { id } = useParams();
   const job = useLoaderData();
   const [title, setTitle] = useState(job.title);
   const [type, setType] = useState(job.type);
@@ -16,9 +20,6 @@ const EditJobPage = ({ updateJobSubmit }) => {
   );
   const [contactEmail, setContactEmail] = useState(job.company.contactEmail);
   const [contactPhone, setContactPhone] = useState(job.company.contactPhone);
-
-  const navigate = useNavigate();
-  const { id } = useParams();
 
   const submitForm = (e) => {
     e.preventDefault();
@@ -38,7 +39,7 @@ const EditJobPage = ({ updateJobSubmit }) => {
       },
     };
 
-    updateJobSubmit(updatedJob);
+    dispatch(updateJob(updatedJob));
 
     toast.success("Job Updated Successfully");
 
@@ -241,10 +242,6 @@ const EditJobPage = ({ updateJobSubmit }) => {
       </div>
     </section>
   );
-};
-
-EditJobPage.propTypes = {
-  updateJobSubmit: PropTypes.func.isRequired,
 };
 
 export default EditJobPage;

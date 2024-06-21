@@ -1,8 +1,8 @@
 import { useDispatch } from "react-redux";
-import { useParams, useLoaderData, useNavigate } from "react-router-dom";
+import { useParams, useLoaderData, useNavigate, Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { FaArrowLeft, FaMapMarker } from "react-icons/fa";
-import { Link } from "react-router-dom";
+import { deleteJob } from "../app/JobSlice";
 
 const JobPage = () => {
   const dispatch = useDispatch();
@@ -17,7 +17,7 @@ const JobPage = () => {
 
     if (!confirm) return;
 
-    deleteJob(jobId);
+    dispatch(deleteJob(jobId));
 
     toast.success("Job deleted successfully");
 
